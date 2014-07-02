@@ -18,7 +18,7 @@ namespace erep
         private void Alapok()
         {
             this.Size = new Size(600, 400);
-            this.Location = new Point(600 / 2 - 250, 100);
+            this.Location = new Point(Screen.GetWorkingArea(this).Width/2-300, 200);
             //-------------------------------------------------------
             Button adatok = new Button();
             Controls.Add(adatok);
@@ -69,6 +69,20 @@ namespace erep
             /*
             TODO:LOAD
             */
+            Button ok = new Button();
+            Controls.Add(ok);
+            ok.Text = "OK";
+            ok.Location = new Point(250, 140);
+            ok.Click += ok_Click;
+        }
+
+        void ok_Click(object sender, EventArgs e)
+        {
+            Controls.Clear();
+            /*
+            TODO:SAVE
+            */
+            Alapok();
         }
     }
 }
