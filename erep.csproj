@@ -33,7 +33,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Skybound.Gecko">
-      <HintPath>bin\Debug\xulrunner\Skybound.Gecko.dll</HintPath>
+      <HintPath>Src\xulrunner\Skybound.Gecko.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
