@@ -11,22 +11,38 @@ namespace erep
         public Form1()
         {
             InitializeComponent();
+            this.Size = new Size(600, 400);
+            this.Location = new Point(Screen.GetWorkingArea(this).Width / 2 - 300, 200);
             Skybound.Gecko.Xpcom.Initialize(@"..\..\Src\xulrunner");
             this.Text = "Auto fight";
             Alapok();
         }
 
+        Button bot;
         private void Alapok()
         {
-            this.Size = new Size(600, 400);
-            this.Location = new Point(Screen.GetWorkingArea(this).Width/2-300, 200);
             //-------------------------------------------------------
             Button adatok = new Button();
             Controls.Add(adatok);
             adatok.Text = "Belépési adatok";
             adatok.Location = new Point(150, 150);
             adatok.Size = new System.Drawing.Size(100, 22);
+            adatok.TabIndex = 1;
             adatok.Click += adatok_Click;
+            //-------------------------------------------------------
+            bot = new Button();
+            Controls.Add(bot);
+            bot.Text = "Bot indítása";
+            bot.Size = new Size(100, 22);
+            bot.Location = new Point(300, 150);
+            bot.Focus();
+            bot.TabIndex = 0;
+            bot.Click += bot_Click;
+        }
+
+        void bot_Click(object sender, EventArgs e)
+        {
+            Controls.Clear();
         }
 
         TextBox nevt, passt;
@@ -68,11 +84,15 @@ namespace erep
             //-------------------------------------------------------
             Button ok = new Button();
             Controls.Add(ok);
-            ok.Text = "OK";
-            ok.Location = new Point(250, 140);
+            ok.Text = "Mentés";
+            ok.Location = new Point(180, 140);
             ok.Click += ok_Click;
             //-------------------------------------------------------
+            Controls.Add(bot);
+            bot.Location = new Point(280, 140);
+            //-------------------------------------------------------
             Load_t();
+
         }
 
         void ok_Click(object sender, EventArgs e)
@@ -92,6 +112,7 @@ namespace erep
                 be = sr.ReadLine();
                 if (be != "")
                     nevt.Text = be;
+                nevt.Select(nevt.Text.Length, 0);
                 //-------------------------------------------------------
                 be = sr.ReadLine();
                 if (be != "")
