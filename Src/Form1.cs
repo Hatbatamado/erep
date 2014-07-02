@@ -48,6 +48,7 @@ namespace erep
         TextBox nevt, passt;
         void adatok_Click(object sender, EventArgs e)
         {
+            string load;
             Controls.Clear();
             //-------------------------------------------------------
             Label cim = new Label();
@@ -69,6 +70,13 @@ namespace erep
             nevt.Location = new Point(220, 73);
             nevt.Size = new Size(nevt.Size.Width + 50, 22);
             nevt.Focus();
+            //-------------------------
+            load = Load_t(1);
+            if (load != "-")
+            {
+                nevt.Text = load;
+                nevt.Select(nevt.Text.Length, 0);
+            }
             //-------------------------------------------------------
             Label pass = new Label();
             Controls.Add(pass);
@@ -81,6 +89,10 @@ namespace erep
             Controls.Add(passt);
             passt.Location = new Point(220, 98);
             passt.Size = nevt.Size;
+            //-------------------------
+            load = Load_t(2);
+            if (load != "-")
+                passt.Text = load;
             //-------------------------------------------------------
             Button ok = new Button();
             Controls.Add(ok);
@@ -91,8 +103,6 @@ namespace erep
             Controls.Add(bot);
             bot.Location = new Point(280, 140);
             //-------------------------------------------------------
-            Load_t();
-
         }
 
         void ok_Click(object sender, EventArgs e)
@@ -102,24 +112,35 @@ namespace erep
             Alapok();
         }
 
-        private void Load_t()
+        private string Load_t(int melyik)
         {
             if (File.Exists("config.conf"))
             {
                 string be = "";
                 StreamReader sr = new StreamReader("config.conf");
-                //-------------------------------------------------------
-                be = sr.ReadLine();
-                if (be != "")
-                    nevt.Text = be;
-                nevt.Select(nevt.Text.Length, 0);
-                //-------------------------------------------------------
-                be = sr.ReadLine();
-                if (be != "")
-                    passt.Text = be;
-                //-------------------------------------------------------
+                switch (melyik)
+                {
+                    case 1:
+                        be = sr.ReadLine();
+                        if (be != "")
+                        {
+                            sr.Close();
+                            return be;
+                        }
+                        break;
+                    case 2:
+                        be = sr.ReadLine();
+                        be = sr.ReadLine();
+                        if (be != "")
+                        {
+                            sr.Close();
+                            return be;
+                        }
+                        break;
+                }
                 sr.Close();
             }
+            return "-";
         }
 
         private void Save_t()
