@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using System.IO;
 
 namespace erep
 {
@@ -28,6 +29,7 @@ namespace erep
             adatok.Click += adatok_Click;
         }
 
+        TextBox nevt, passt;
         void adatok_Click(object sender, EventArgs e)
         {
             Controls.Clear();
@@ -46,14 +48,11 @@ namespace erep
             nev.Font = new System.Drawing.Font("Arial", 10);
             nev.Location = new Point(100, 75);
             //-------------------------------------------------------
-            TextBox nevt = new TextBox();
+            nevt = new TextBox();
             Controls.Add(nevt);
             nevt.Location = new Point(220, 73);
             nevt.Size = new Size(nevt.Size.Width + 50, 22);
             nevt.Focus();
-            /*
-            TODO:LOAD
-            */
             //-------------------------------------------------------
             Label pass = new Label();
             Controls.Add(pass);
@@ -62,27 +61,52 @@ namespace erep
             pass.Font = new Font("Arial", 10);
             pass.Location = new Point(164, 100);
             //-------------------------------------------------------
-            TextBox passt = new TextBox();
+            passt = new TextBox();
             Controls.Add(passt);
             passt.Location = new Point(220, 98);
             passt.Size = nevt.Size;
-            /*
-            TODO:LOAD
-            */
+            //-------------------------------------------------------
             Button ok = new Button();
             Controls.Add(ok);
             ok.Text = "OK";
             ok.Location = new Point(250, 140);
             ok.Click += ok_Click;
+            //-------------------------------------------------------
+            Load_t();
         }
 
         void ok_Click(object sender, EventArgs e)
         {
+            Save_t();
             Controls.Clear();
-            /*
-            TODO:SAVE
-            */
             Alapok();
+        }
+
+        private void Load_t()
+        {
+            if (File.Exists("config.conf"))
+            {
+                string be = "";
+                StreamReader sr = new StreamReader("config.conf");
+                //-------------------------------------------------------
+                be = sr.ReadLine();
+                if (be != "")
+                    nevt.Text = be;
+                //-------------------------------------------------------
+                be = sr.ReadLine();
+                if (be != "")
+                    passt.Text = be;
+                //-------------------------------------------------------
+                sr.Close();
+            }
+        }
+
+        private void Save_t()
+        {
+            StreamWriter sw = new StreamWriter("config.conf",false); //overwrite
+            sw.WriteLine(nevt.Text);
+            sw.WriteLine(passt.Text);
+            sw.Close();
         }
     }
 }
